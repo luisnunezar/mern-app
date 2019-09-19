@@ -1,12 +1,18 @@
-const path = require('path')
+const HtmlWebpackPlugin = require('html-webpack-plugin');
+const HtmlWebpackRootPlugin = require('html-webpack-root-plugin');
+const path = require('path');
+
 module.exports = {
     entry: './src/app/index.js',
     output: {
-        path: __dirname + '/src/public',
-        filename: 'bundle.js'
+        path: path.resolve(__dirname, 'src/public'),
+        filename: 'bundle.js',
+        publicPath: '/'
     },
     devServer: {
-        historyApiFallback: true,
+        port: 4000,
+        publicPath: '/',
+        historyApiFallback: true
     },
     module: {
         rules: [
@@ -25,5 +31,9 @@ module.exports = {
                 use: ['style-loader', 'css-loader']
             }
         ]
-    }
+    },
+    plugins: [
+        new HtmlWebpackPlugin({ template: 'src/index.html' }),
+        new HtmlWebpackRootPlugin()
+    ]
 }
