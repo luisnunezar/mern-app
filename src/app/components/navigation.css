@@ -1,3 +1,11 @@
 .active {
-    background-color: rgba(0, 0, 0, 0.20);
+    background-color: #45A1BF;
+}
+
+.nav-link:hover {
+    background-color: #45A1BF;
+}
+
+.main-nav {
+    background-color: #007EA7;
 }
