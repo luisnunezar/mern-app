@@ -3,13 +3,10 @@ import { NavLink, withRouter } from 'react-router-dom';
 
 import './navigation.css';
 
-export default class Navigation extends React.Component {
-    constructor(props) {
-        super(props)
-    }
+function Navigation() {
 
-    render() {
-        return (<div>
+    return (
+        <div>
             <nav>
                 <div className="nav-wrapper container">
                     <NavLink exact className="brand-logo" to="/" activeStyle={{ backgroundColor: "transparent" }}>MERN App</NavLink>
@@ -18,8 +15,10 @@ export default class Navigation extends React.Component {
                     </ul>
                 </div>
             </nav>
-        </div >);
-    }
+        </div>
+    );
 }
 
 Navigation = withRouter(Navigation);
+
+export default Navigation;

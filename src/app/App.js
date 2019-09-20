@@ -6,11 +6,10 @@ import About from './components/about.js';
 
 import { BrowserRouter, Route } from 'react-router-dom';
 
-export default class App extends React.Component {
+function App() {
 
-    render() {
-        return (<div>
-
+    return (
+        <div>
             <BrowserRouter>
                 <Navigation />
 
@@ -19,6 +18,8 @@ export default class App extends React.Component {
 
             </BrowserRouter>
 
-        </div>);
-    }
+        </div>
+    );
 }
+
+export default App;
