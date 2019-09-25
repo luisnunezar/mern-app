@@ -55,14 +55,14 @@ function Home() {
             .catch(err => console.log(err));
     }
 
-    const editTask = () => {
-        console.log('Editando...');
+    const editTask = (id) => {
+        console.log(`Editando la tarea ${id}...`);
     }
 
     // Eliminar una tarea
     const deleteTask = (id) => {
         // console.log(`Eliminando la tarea ${id}...`);
-        if (confirm('¿Seguro que desea eliminarlo?')) {
+        if (confirm('¿Seguro que desea eliminar esta tarea?')) {
             fetch(`http://localhost:3000/api/tasks/${id}`, {
                 method: 'DELETE',
                 headers: {
@@ -126,7 +126,12 @@ function Home() {
                                             <td>{tarea.title}</td>
                                             <td>{tarea.description}</td>
                                             <td>
-                                                <button className='btn' onClick={editTask} style={{ margin: '2px' }}><i className='material-icons'>edit</i></button>
+                                                <button className='btn'
+                                                    onClick={() => { editTask(tarea.id) }}
+                                                    style={{ margin: '2px' }}>
+                                                    <i className='material-icons'>edit</i>
+                                                </button>
+
                                                 <button className='btn'
                                                     onClick={() => { deleteTask(tarea.id) }}
                                                     style={{ margin: '2px' }}>
