@@ -7,6 +7,7 @@ function Home() {
     const [titulo, setTitulo] = useState('');
     const [descripcion, setDescripcion] = useState('');
     const [tareas, setTareas] = useState([]);
+    const [id, setId] = useState('');
 
     useEffect(() => {
         fetchTasks();
@@ -14,22 +15,46 @@ function Home() {
 
     // Añadir una tarea
     const addTask = (event) => {
-        fetch('http://localhost:3000/api/tasks', {
-            method: 'POST',
-            body: JSON.stringify({ 'title': titulo, 'description': descripcion }),
-            headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json'
-            }
-        })
-            .then(res => res.json())
-            .then(data => {
-                M.toast({ html: 'Tarea Guardada.' });
-                setTitulo('');
-                setDescripcion('');
-                fetchTasks();
+        if (id === '') {
+            fetch('http://localhost:3000/api/tasks', {
+                method: 'POST',
+                body: JSON.stringify({ 'title': titulo, 'description': descripcion }),
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                }
             })
-            .catch(err => console.log(err));
+                .then(res => res.json())
+                .then(data => {
+                    M.toast({ html: 'Tarea Guardada.' });
+                    setId('');
+                    setTitulo('');
+                    setDescripcion('');
+                    fetchTasks();
+                })
+                .catch(err => console.log(err));
+        } else {
+            fetch(`http://localhost:3000/api/tasks/${id}`, {
+                method: 'PUT',
+                body: JSON.stringify({
+                    'title': titulo,
+                    'description': descripcion
+                }),
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                }
+            })
+                .then(res => res.json())
+                .then(data => {
+                    M.toast({ html: 'Tarea Actualizada.' });
+                    setTitulo('');
+                    setDescripcion('');
+                    setId('');
+                    fetchTasks();
+                })
+                .catch(err => console.log(err));
+        }
 
         event.preventDefault();
     };
@@ -55,8 +80,17 @@ function Home() {
             .catch(err => console.log(err));
     }
 
+    // Editar una tarea
     const editTask = (id) => {
-        console.log(`Editando la tarea ${id}...`);
+        // console.log(`Editando la tarea ${id}...`);
+        fetch(`http://localhost:3000/api/tasks/${id}`)
+            .then(res => res.json())
+            .then(data => {
+                setId(id);
+                setTitulo(data.title);
+                setDescripcion(data.description);
+            })
+            .catch(err => console.log(err));
     }
 
     // Eliminar una tarea
