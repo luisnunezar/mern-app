@@ -1,4 +1,6 @@
 import React, { useState, useEffect } from 'react';
+import Tasks from './tasks';
+import Pagination from './pagination';
 
 import './home.css';
 
@@ -8,6 +10,9 @@ function Home() {
     const [descripcion, setDescripcion] = useState('');
     const [tareas, setTareas] = useState([]);
     const [id, setId] = useState('');
+    const [loading, setLoading] = useState(false);
+    const [paginaActual, setPaginaActual] = useState(1);
+    const [tasksPerPage] = useState(3);
 
     useEffect(() => {
         fetchTasks();
@@ -61,6 +66,7 @@ function Home() {
 
     // Traer todas las tareas
     const fetchTasks = (event) => {
+        setLoading(true);
         fetch('http://localhost:3000/api/tasks')
             .then(res => res.json())
             .then(data => {
@@ -78,11 +84,11 @@ function Home() {
                 // console.log(tareas);
             })
             .catch(err => console.log(err));
+        setLoading(false);
     }
 
     // Editar una tarea
     const editTask = (id) => {
-        // console.log(`Editando la tarea ${id}...`);
         fetch(`http://localhost:3000/api/tasks/${id}`)
             .then(res => res.json())
             .then(data => {
@@ -95,7 +101,6 @@ function Home() {
 
     // Eliminar una tarea
     const deleteTask = (id) => {
-        // console.log(`Eliminando la tarea ${id}...`);
         if (confirm('¿Seguro que desea eliminar esta tarea?')) {
             fetch(`http://localhost:3000/api/tasks/${id}`, {
                 method: 'DELETE',
@@ -118,6 +123,12 @@ function Home() {
         if (event.target.name == 'title') setTitulo(event.target.value);
         else setDescripcion(event.target.value);
     };
+
+    const indexLastTask = paginaActual * tasksPerPage;
+    const indexFirstTask = indexLastTask - tasksPerPage;
+    const currentTasks = tareas.slice(indexFirstTask, indexLastTask);
+
+    const cambiarPagina = (numDePagina) => setPaginaActual(numDePagina);
 
     return (
         <div className="container">
@@ -145,38 +156,8 @@ function Home() {
                 </div>
 
                 <div className="col s7">
-                    <table>
-                        <thead>
-                            <tr>
-                                <th>Título</th>
-                                <th>Descripción</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {
-                                tareas.map(tarea => {
-                                    return (
-                                        <tr key={tarea.id}>
-                                            <td>{tarea.title}</td>
-                                            <td>{tarea.description}</td>
-                                            <td>
-                                                <button className='btn'
-                                                    onClick={() => { editTask(tarea.id) }}
-                                                    style={{ margin: '2px' }}>
-                                                    <i className='material-icons'>edit</i>
-                                                </button>
-
-                                                <button className='btn'
-                                                    onClick={() => { deleteTask(tarea.id) }}
-                                                    style={{ margin: '2px' }}>
-                                                    <i className='material-icons'>delete</i>
-                                                </button>
-                                            </td>
-                                        </tr>
-                                    )
-                                })}
-                        </tbody>
-                    </table>
+                    <Tasks tareas={currentTasks} loading={loading} />
+                    <Pagination tareasPorPagina={tasksPerPage} cantTareasTotal={tareas.length} paginate={cambiarPagina} pagAct={paginaActual} />
                 </div>
             </div>
         </div >
