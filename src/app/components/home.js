@@ -160,7 +160,7 @@ function Home() {
                 </div>
 
                 <div className="col s12 l7">
-                    <Tasks tareas={currentTasks} loading={loading} />
+                    <Tasks tareas={currentTasks} loading={loading} editTask={editTask} deleteTask={deleteTask} />
                     <Pagination tareasPorPagina={tasksPerPage} cantTareasTotal={tareas.length} paginate={cambiarPagina} pagAct={paginaActual} />
                 </div>
             </div>

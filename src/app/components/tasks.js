@@ -1,6 +1,6 @@
 import React from 'react';
 
-const Tasks = ({ tareas, loading }) => {
+const Tasks = ({ tareas, loading, editTask, deleteTask }) => {
     return <table>
         <thead>
             <tr>

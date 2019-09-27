@@ -9,7 +9,7 @@ router.post('/register', async (req, res) => {
     const user = new User({ username, email, password });
     try {
         user.password = await user.encryptPassword(user.password);
-        console.log(user);
+        // console.log(user);
         await user.save();
         res.json(user);
     } catch (error) {
