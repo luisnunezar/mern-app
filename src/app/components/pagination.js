@@ -9,13 +9,13 @@ const Pagination = ({ tareasPorPagina, cantTareasTotal, paginate, pagAct }) => {
 
     return (
         <ul className="pagination">
-            <li><a onClick={() => paginate(pagAct - 1)} href="#!"><i class="material-icons">chevron_left</i></a></li>
+            <li><a onClick={() => paginate(pagAct - 1, numeroDePaginas)} href="#!"><i className="material-icons">chevron_left</i></a></li>
             {numeroDePaginas.map(numero => (
                 <li key={numero} className="waves-effect">
-                    <a onClick={() => paginate(numero)} href="#!">{numero}</a>
+                    <a onClick={() => paginate(numero, numeroDePaginas)} href="#!">{numero}</a>
                 </li>
             ))}
-            <li className="waves-effect"><a onClick={() => paginate(pagAct + 1)} href="#!"><i class="material-icons">chevron_right</i></a></li>
+            <li className="waves-effect"><a onClick={() => paginate(pagAct + 1, numeroDePaginas)} href="#!"><i className="material-icons">chevron_right</i></a></li>
         </ul>
     )
 }

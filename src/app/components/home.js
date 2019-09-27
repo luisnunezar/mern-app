@@ -128,12 +128,16 @@ function Home() {
     const indexFirstTask = indexLastTask - tasksPerPage;
     const currentTasks = tareas.slice(indexFirstTask, indexLastTask);
 
-    const cambiarPagina = (numDePagina) => setPaginaActual(numDePagina);
+    const cambiarPagina = (numDePagina, cantPaginas) => {
+        if (numDePagina < 1) setPaginaActual(1);
+        else if (numDePagina >= cantPaginas.length) setPaginaActual(cantPaginas.length);
+        else setPaginaActual(numDePagina);
+    };
 
     return (
         <div className="container">
             <div className="row principal">
-                <div className="col s5">
+                <div className="col s12 l5">
                     <div className="card">
                         <div className="card-content">
 
@@ -155,7 +159,7 @@ function Home() {
                     </div>
                 </div>
 
-                <div className="col s7">
+                <div className="col s12 l7">
                     <Tasks tareas={currentTasks} loading={loading} />
                     <Pagination tareasPorPagina={tasksPerPage} cantTareasTotal={tareas.length} paginate={cambiarPagina} pagAct={paginaActual} />
                 </div>
