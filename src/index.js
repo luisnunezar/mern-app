@@ -10,6 +10,7 @@ const app = express();
 // Settings
 app.set('port', process.env.PORT || 3000);
 mongoose.set('useFindAndModify', false);
+require('dotenv').config();
 
 // Middlewares
 app.use(express.json());
