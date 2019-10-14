@@ -11,7 +11,8 @@ function Navigation() {
                 <div className="nav-wrapper container">
                     <NavLink exact className="brand-logo" to="/" activeStyle={{ backgroundColor: "transparent" }}>MERN App</NavLink>
                     <ul id="nav-mobile" className="right hide-on-med-and-down">
-                        <li><NavLink className="nav-link" to="/about" activeClassName="active">About</NavLink></li>
+                        <li><NavLink className="nav-link" to="/about" activeClassName="nav-active">About</NavLink></li>
+                        <li><NavLink className="nav-link" to="/login" activeClassName="nav-active">Login</NavLink></li>
                     </ul>
                 </div>
             </nav>

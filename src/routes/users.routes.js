@@ -36,7 +36,7 @@ router.post('/login', async (req, res) => {
     const { email, password } = req.body;
     const user = await User.findOne({ email: email });
 
-    if (!user) return res.status(404).send('El correo no existe');
+    if (!user) return res.status(200).send('El correo no existe');
 
     const validPassword = await user.validatePassword(password);
     if (!validPassword) return res.status(401).json({ auth: false, token: null });

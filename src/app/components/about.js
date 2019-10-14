@@ -3,8 +3,10 @@ import React from 'react';
 function About() {
 
     return (
-        <div>
-            <h1>About</h1>
+        <div className='container'>
+            <div className="row principal">
+                <h2>About</h2>
+            </div>
         </div >
     );
 }
